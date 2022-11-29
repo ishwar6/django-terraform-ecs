@@ -9,10 +9,17 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-south-1"
+  region  = "ap-south-1"
   version = "~> 4.41.0"
-  shared_config_files      = ["/Users/ishwarjangid/.aws/conf"]
-  shared_credentials_files = ["/Users/ishwarjangid/.aws/creds"]
-   profile                  = "default"
 }
-    
+
+locals {
+  prefix = "${var.prefix}-${terraform.workspace}"
+  common_tags = {
+    Environment = terraform.workspace
+    Project     = var.project
+    Owner       = var.contact
+    ManagedBy   = "Terraform"
+  }
+
+}
