@@ -6,20 +6,20 @@ pipeline{
        
       steps  {
             sh '''
-            docker-compose -f deploy/docker-compose.yml run --rm terraform init     
+            docker-compose -f devops/deploy/docker-compose.yml run --rm terraform init     
             '''}
         }
         stage('Terraform Seutp'){
             steps {
                 sh '''
-                docker-compose -f deploy/docker-compose.yml run --rm terraform validate     
+                docker-compose -f devops/deploy/docker-compose.yml run --rm terraform validate     
                 '''
             }
         }
         stage('Terraform'){
             steps {
                 sh '''
-                docker-compose -f deploy/docker-compose.yml run --rm terraform fmt     
+                docker-compose -f devops/deploy/docker-compose.yml run --rm terraform fmt     
                 '''
             }
         }
