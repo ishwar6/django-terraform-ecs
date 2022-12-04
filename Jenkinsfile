@@ -9,22 +9,31 @@ pipeline{
         stage('Terraform Init'){
        
       steps  {
+
+                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
             sh '''
             docker-compose -f devops/deploy/docker-compose.yml run --rm terraform init     
-            '''}
+            '''
+        }
+
+   }
         }
         stage('Terraform Seutp'){
             steps {
-                sh '''
-                docker-compose -f devops/deploy/docker-compose.yml run --rm terraform validate     
-                '''
+                    withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+                        sh '''
+                        docker-compose -f devops/deploy/docker-compose.yml run --rm terraform validate     
+                        '''
+        }
             }
         }
         stage('Terraform'){
             steps {
-                sh '''
-                docker-compose -f devops/deploy/docker-compose.yml run --rm terraform fmt     
-                '''
+                     withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+                        sh '''
+                        docker-compose -f devops/deploy/docker-compose.yml run --rm terraform fmt     
+                        '''
+        }
             }
         }
     }
