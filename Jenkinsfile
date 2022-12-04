@@ -10,7 +10,7 @@ pipeline{
        
       steps  {
 
-                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+               withCredentials([aws(credentialsId: 'b62a4ab2-5a62-4b83-b92e-025b080bc4e1', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
             sh '''
             docker-compose -f devops/deploy/docker-compose.yml run --rm terraform init     
             '''
@@ -20,7 +20,7 @@ pipeline{
         }
         stage('Terraform Seutp'){
             steps {
-                    withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+                     withCredentials([aws(credentialsId: 'b62a4ab2-5a62-4b83-b92e-025b080bc4e1', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh '''
                         docker-compose -f devops/deploy/docker-compose.yml run --rm terraform validate     
                         '''
@@ -29,7 +29,7 @@ pipeline{
         }
         stage('Terraform'){
             steps {
-                     withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+                    withCredentials([aws(credentialsId: 'b62a4ab2-5a62-4b83-b92e-025b080bc4e1', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh '''
                         docker-compose -f devops/deploy/docker-compose.yml run --rm terraform fmt     
                         '''
